@@ -1,0 +1,109 @@
+# Express.js
+
+(2020.08.09)
+graphql을 무작정 시작하다 결국 express에대해 간단히 알아보기위해 첫 발을 들임
+
+## dependencies
+
+- express
+- body-parser
+- cors
+
+## 기본 코드
+
+```javascript
+// app.js
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const app = express();
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+app.post("/signin", (req, res) => {
+  const { username, password } = req.body;
+  res.send({ username, password });
+});
+app.listen(3000, () => console.log("Example app listening on port 3000!"));
+
+```
+
+express를 통해 다시한번 http methods에대해 복습하고 이를 하나씩 적용해보았으며 기본적으로 node.js에있는 서버구축과 연결시스템을 express를 이용해 더 간편이 만들수 있었다
+~~(이때까지 express 없으면 안되는줄..)~~
+
+- express : node에서보다 편하게 서버를 구축
+- body-parser : 클라이언트에서 POST요청으로 보낸 데이터를 json의 형태로 만들어줌. 사용전에 readable한 상태의 어떤 객체를 반환하는데 이를 사용하기위해 파싱하는과정을 도움
+~~(약간 java에서 입력스트림마냥 이래저래 가지고놀기 귀찮..어렵..)~~
+
+- cors : 보안을위한 cors를 로컬에서 그냥 돌리기위해 설정을 해제해줌(사실 헤더에 *로 모두허용으로 바꾸는게 다임..)
+
+```javascript
+// client-side ajax request
+document.querySelector(".get").addEventListener("click", () => {
+  fetch("http://localhost:3000/", {
+    method: "GET",
+  })
+    .then(async (res) => {
+      console.log(await res.text());
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+});
+document.querySelector("button").addEventListener("click", () => {
+  const username = document.querySelector("input[name=username]").value;
+  const password = document.querySelector("input[name=password]").value;
+
+  const payload = { username, password };
+  fetch("http://localhost:3000/signin", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(async (response) => {
+      const data = await response.json();
+      document.querySelector(".result").innerHTML = data;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+});
+```
+
+client에서의 이벤트로 get, post요청을 각각 하나씩 위의 app.js와 함께 작성한것이다.
+
+---
+
+```javascript
+// client-side ajax request
+  document.querySelector('button').addEventListener('click', function () {
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', '/signin');
+
+  const username = document.querySelector('input[name=username]').value;
+  const password = document.querySelector('input[name=password]').value;
+
+  const payload = { username, password };
+
+  xhr.setRequestHeader('Content-type', 'application/json');
+  xhr.send(JSON.stringify(payload));
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState !== XMLHttpRequest.DONE) return;
+
+    if (xhr.status === 200) {
+      console.log(xhr.response)
+      document.querySelector('.result').innerHTML = xhr.response;
+    } else {
+      console.log("Error!");
+    }
+  };
+});
+```
+
+fetch를 지원하지 않는 ~~(악의무리)~~ IE에서도 작동을 원한다면 이러한코드여야 함
