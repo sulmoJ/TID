@@ -104,3 +104,9 @@ type Mutation {
   deleteMovie(id: Int!): Boolean!
 }
 ```
+
+## **Subscription** : DB의 상태변화를 감지하기
+
+메신저에서 알림기능과 같은 부분인데 graphql만으로 subscription을 구현하려면 서버를 분리하여 사용하기 조금 어려우나 prisma에서 이를 몇가지 조건과 함께 쉽게 구현했다고 함.
+
+

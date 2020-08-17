@@ -2,10 +2,10 @@
 
 ## stack
 
-- node express
+- node express (2020.08.03~ )
 - prisma_1 : js 또는 ts 서버와 DB사이에서 조작을 돕는 툴?(ORM)
   - prisma 1.34 버전으로 docker와 함께 사용
-- react
+- react (2020.08.15~)
 
 ## dependencies
 
@@ -21,6 +21,7 @@
 - nodemailer-sendgrid-transport
 - passport
 - passport-jwt : 3.5부터 jwt에대한 니코의 사용법을 볼수있다.
+- jsonwebtoken : 토큰을 만들때 사용하는 library
 
 ## docker  
 
@@ -28,7 +29,7 @@
 
 일단 prisma1을 사용하기위해 도커를 통해 db를 실행하고 이를 prisma와 연결하여 사용해야 해서 최대한 간단히 기본만 구축하였다.
 
-docker란?
+>docker란?
 
 도커는 virtual machine보다 가볍고 빠르게 모든 개발환경을 담고 제어할 수 있다. GuestOS를 따로 설치하지않아 system call을 공유하여 빠르고 docker 엔진에서 이미지와 컨테이너로 라이브러리, 시스템 도구, 코드, 런타임 등 소프트웨어를 실행하는데 모든것을 담을 수 있어 문제없이 실행 가능하다.
 
@@ -38,3 +39,5 @@ docker란?
   - home 버전과 나머지 버전은 사용 방법이다름으로 os업뎃을 꼭 하고 시작할 것
   - 본인은 home버전이였고 home버전은 wsl2에 docker를 설치하여 사용해야 함
   - wsl2를 사용하기위해서 microsoft store에서 windows terminal과 ubuntu 배포판을 설치하고 시작해야 함
+
+
