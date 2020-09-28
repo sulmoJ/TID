@@ -50,6 +50,7 @@
 - node.js express.js
 - python beautifulsoup
 - java spring
+- 웹 어셈블리
 
 ## 경력
 
