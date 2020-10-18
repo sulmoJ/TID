@@ -1,9 +1,14 @@
-const origin = "원본 파일";
+// app.js
+const http = require("http"); // 1
+const hostname = "127.0.0.1";
+const server = http.createServer((request, response) => {
+  // 2
+  response.statusCode = 200;
+  response.setHeader("Content-Type", "text/plain");
+  response.end("Hello World");
+});
 
-const data1 = {
-  test2: "test2",
-};
-
-const data = {
-  test1: "test1 data",
-};
+server.listen(3000, hostname, () => {
+  console.log("hello~");
+});
+console.log("Server running at http://127.0.0.1:3000/");
