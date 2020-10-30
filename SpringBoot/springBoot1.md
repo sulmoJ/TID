@@ -16,7 +16,7 @@ spring.io에서 spring boot quickstart로 셋팅 후 파일을 받고 이부분�
 
 이후는 크게 남겨놓지 않아도 알수 있는 것들임으로 패스
 
-## 당황
+## 초반 세팅 완료시 폴더구조
 
 폴더구조를 가져와 보았다.
 ![tree](img/springBoot1-1.png)
@@ -30,7 +30,7 @@ spring.io에서 spring boot quickstart로 셋팅 후 파일을 받고 이부분�
 ## test
 
 1. 클래스생성
-2. 클래스에서 우클릭시 GO -> test로 test 파일생성
+2. intelliJ에서 `cmd`+`shift`+`t` 를 클래스에서 사용시 테스트 생성을 바로 할 수 있음
 3. 2가지의 테스트방법
 
    ```java
@@ -75,6 +75,128 @@ build.gradle에 의존성 추가하기(package.json과 비슷한 역할을 하�
     }
 ```
 
+## DB에 접근 및 수정
+
+하나의 테이블을 예로 만들면 구조가 아래와 같다.
+![MCR](img/springBoot1-2.png)
+
+- model : DB에 구성될 모델을 만드는 파일들이 있다.
+
+  ```java
+  package com.todolist.sulmo.todolist.model;
+
+  import javax.persistence.Entity;
+  import javax.persistence.GeneratedValue;
+  import javax.persistence.Id;
+
+  @Entity
+  public class Todo {
+      @Id
+      @GeneratedValue
+      private Long id;
+
+      private String content;
+
+      private boolean checked = false;
+
+      public Long getId() {
+          return id;
+      }
+
+      public void setId(Long id) {
+          this.id = id;
+      }
+
+      public String getContent() {
+          return content;
+      }
+
+      public void setContent(String content) {
+          this.content = content;
+      }
+
+      public boolean isChecked() {
+          return checked;
+      }
+
+      public void setChecked(boolean checked) {
+          this.checked = checked;
+      }
+
+      @Override
+      public String toString() {
+          return "Todo{" +
+                  "id=" + id +
+                  ", content='" + content + '\'' +
+                  ", checked=" + checked +
+                  '}';
+      }
+  }
+  ```
+
+  위와같이 구성되며 getter와 setter로 도배가 됨으로 [lombok](#lombok)이라는 패키지가 예쁘고 쉽게 도와준다.
+
+- controller
+
+  ```java
+
+  ```
+
+- repository
+
+  ```java
+
+  ```
+
+## Lombok
+
+- gradle에 lombok관련 의존성을 추가하고
+- intelliJ -> preferences -> Build... -> compiler -> Annotation Processor 에 Enable annotation processing에 체크
+- 사용
+  build.gradle
+
+```gradle
+dependencies {
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+```
+
+아래는 getter, setter 자동생성 예이며 이 외에도 많은 기능이 lombok에 있다.
+
+```java
+package com.todolist.sulmo.todolist.model;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
+@Getter // 세줄의 추가로 Getter와 Setter, ToString을 모두 생성해준다.
+@Setter
+@ToString
+public class Todo {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String content;
+    @ToString.Exclude // 해당 필드를 제외하고 투스트링 생성
+    private boolean checked = false;
+}
+```
+**Lombok 기능**
+- Constructor : 생성자를 만들어주는 어노테이션들이다.
+  - @NoArgsConstructor : 인자가 없는생성자를 만들어 줌
+  - @AllArgsConstructor : 모든 인자가 있어야하는 생성자를 만들어 줌
+  - @RequiredArgsConstructor : 내가 설정한 스키마를 필요로하는 생성자를 만들어줌. 필요한 스키마를 설정하는 방식은 @NonNull을 스키마변수 위에 달아주면 가능
+  - HashCode와 Equels : 클래스로 생성된 인스턴스를 비교할때 내부의 내용으로 비교하기위해 equals를 오버라이딩 해야한다. hashcode가 내용이 같으면 같은 값을 같도록 만들어주는 기능이다.
 ## 출처
 
 - gradle 과 maven : https://okky.tistory.com/179
