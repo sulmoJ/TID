@@ -2,7 +2,7 @@
 
 자바프로그래밍 수업에서 자바를 이용한 개인 프로젝트를 만들어오라는 과제가있어 스프링부트로 **매우 간단한** api를 만들어보기로 하였다.
 
-자바도 익숙하지않고 스프링도 처음써보는데 어디까지 만들수 있을지.. 최종적으로 DB에서 간단한 쿼리의 데이터를 가져와 프론트까지 뿌려볼 수 있도록 배워볼 계획이다. 고오오급 프론트 개발자가 되기위해 백엔드의 기본적인 구조를 직접 한번쯤은 만져봐야하지 안겠는가!!
+자바도 익숙하지않고 스프링도 처음써보는데 어디까지 만들수 있을지.. 최종적으로 DB에서 간단한 쿼리의 데이터를 가져와 프론트까지 뿌려볼 수 있도록 배워볼 계획이다. 고오오급 프론트 개발자가 되기위해 백엔드의 기본적인 구조를 직접 한번쯤은 만져봐야하지 않겠는가!!
 
 ## 스프링 과 스프링부트
 
@@ -150,6 +150,8 @@ build.gradle에 의존성 추가하기(package.json과 비슷한 역할을 하�
 
 ## Lombok
 
+intelliJ로 개발한다면 lombok plugin을 설치해주세요. ~~(빨간글자가 매우 거슬린다.)~~
+
 - gradle에 lombok관련 의존성을 추가하고
 - intelliJ -> preferences -> Build... -> compiler -> Annotation Processor 에 Enable annotation processing에 체크
 - 사용
@@ -191,12 +193,15 @@ public class Todo {
     private boolean checked = false;
 }
 ```
+
 **Lombok 기능**
+
 - Constructor : 생성자를 만들어주는 어노테이션들이다.
   - @NoArgsConstructor : 인자가 없는생성자를 만들어 줌
   - @AllArgsConstructor : 모든 인자가 있어야하는 생성자를 만들어 줌
   - @RequiredArgsConstructor : 내가 설정한 스키마를 필요로하는 생성자를 만들어줌. 필요한 스키마를 설정하는 방식은 @NonNull을 스키마변수 위에 달아주면 가능
   - HashCode와 Equels : 클래스로 생성된 인스턴스를 비교할때 내부의 내용으로 비교하기위해 equals를 오버라이딩 해야한다. hashcode가 내용이 같으면 같은 값을 같도록 만들어주는 기능이다.
+
 ## 출처
 
 - gradle 과 maven : https://okky.tistory.com/179
