@@ -39,10 +39,10 @@ store.dispatch({
   type: "inc",
 });
 
-store.dispatch(actionCreator("reset"));
+// store.dispatch(actionCreator("reset"));
 
-const Increment = () => store.dispatch(actionCreator("inc"));
+// const Increment = () => store.dispatch(actionCreator("inc"));
 
-Increment();
-Increment();
-Increment();
+// Increment();
+// Increment();
+// Increment();

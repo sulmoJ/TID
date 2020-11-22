@@ -31,17 +31,17 @@ sulmo유저로 django_test DB에 접속
 
 ### db생성
 
-`CREATE DATABASE django_test`
+`CREATE DATABASE django_test;`
 
 ### 유저생성
 
-`CREATE USER django_tester WITH PASSWORD '1234'`
+`CREATE USER django_tester PASSWORD '1234';`
 
 비밀번호가 1234 인 django_tester 유저 생성
 
 ### 권한 부여
 
-`ALTER ROLE django_tester CREATEDB`
+`ALTER ROLE django_tester CREATEDB;`
 
 CREATEDB권한 django_tester에게 부여
 

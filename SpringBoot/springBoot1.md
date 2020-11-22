@@ -89,7 +89,7 @@ build.gradle에 의존성 추가하기(package.json과 비슷한 역할을 하�
   import javax.persistence.GeneratedValue;
   import javax.persistence.Id;
 
-  @Entity
+  @Entity // Table하나와 일대일 매칭되는 단위
   public class Todo {
       @Id
       @GeneratedValue
@@ -202,6 +202,19 @@ public class Todo {
   - @RequiredArgsConstructor : 내가 설정한 스키마를 필요로하는 생성자를 만들어줌. 필요한 스키마를 설정하는 방식은 @NonNull을 스키마변수 위에 달아주면 가능
   - HashCode와 Equels : 클래스로 생성된 인스턴스를 비교할때 내부의 내용으로 비교하기위해 equals를 오버라이딩 해야한다. hashcode가 내용이 같으면 같은 값을 같도록 만들어주는 기능이다.
 
+
+
+## rest api method
+
+### GET
+```java
+    @GetMapping("/{id}")
+    public Todo getMyTodo(@PathVariable Long id) {
+        return todoService.getTodo(id);
+    }
+    
+    // id에 맞는 값을 요청(api/todo/1)
+```
 ## 출처
 
 - gradle 과 maven : https://okky.tistory.com/179
