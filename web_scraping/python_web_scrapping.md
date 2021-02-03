@@ -66,3 +66,65 @@ for i in problem_title:
   - 가장 빠른 속도의 구문분석기이다.
   - 지저분한 html코드(태그가 안닫혀있거나 계층구조가 잘못되었거나 등등)에 일일히 멈추지않고 진행
   - 설치 필요
+
+### 대표적인 정제 방법
+
+bs4를 통해 파싱된 beautifulsoup객체에서 원하는 태그의 데이터만 가져올 두가지 대표적인 방법
+
+#### select
+
+```python
+data = soup.select('div > span.color')
+```
+
+div직계 자손중 color 클래스를 가진 span 태그를 하게된다.
+css의 선택자를 통해 가져오는 방식임으로 가장 편리하게 가져올 수 있다.
+
+#### findAll, find
+
+```python
+# 아래처럼 여러가지 속성이 있으나 태그와 속성정도만 거의 사용되는 것 같다.
+data = soup.find_all(tag, attributes, recursive, text, limit, keywords)
+
+# 해당 태그 전체를 탐색
+bs.find_all('a')
+```
+
+명시적으로 함수에 원하는 태그와 클래스 명을 입력하여 찾는 방식이다. 이외에도 매우 다양한 함수들이 존재하며 예로 원하는 텍스트의 부모로 접근 형제 접근 등 html문서의 **DOM트리** 구조에 따라 쉽게 접근하는 방법이 많다. [공식문서](https://www.crummy.com/software/BeautifulSoup/bs4/doc/#calling-a-tag-is-like-calling-find-all)
+
+### 예외처리
+
+```python
+from urllib.error import HTTPError, URLError
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+
+url="https://www.acmicpc.net/workbook/view/5078"
+
+
+try:
+    with urlopen(url) as f:
+        # http응답 객체
+        print(f) # <http.client.HTTPResponse object at 0x103c51490>
+except HTTPError as e:
+    print(e)
+except URLError as e:
+    print('server could not be found')
+
+```
+
+- HTTPError
+  HTTP상태코드가 400번대 혹은 500번대로 에러상황시 발생하는 상태코드
+- URLError
+  url에 오타가 있거나 서버가 없는경우 HTTP상태코드를 아예 받지 못하는 경우 발생
+  dns자체가 존재하지 않는 서버이면 뜹니다.
+- AttributeError : bs4로 태그에 접속했을 때 없는 태그이면 None이 출력 되는데 그때 뜨는 예외
+
+### 현재 까지
+
+- solved.ac가 크롬 익스텐션으로 설치해야 보이는 부분이라서 python내장 request로 해당 부분 까지 가져와 지지 않음
+- solved.ac를 크롤링 하면 될듯?
+- standard라는 표시가된 문제가 있는데 어느정도 기준이 있는 표준문제인줄 알았지만 그런거 같진 않음 한번 같이 봐야할듯
+- 현재까지 생각으론 문제 시도 횟수가 많을 수록 풀어볼 의미가 있다고 생각이 듦
+- chrome 익스텐션이 적용된 페이지를 크롤링 할 수 있다면 단계별로 hidden이 적용된 태그가 있음 해당 태그엔 난이도가 정수형태의 수치로 생성되어있음으로 그대로 난이도 적용 하면 될듯 함
+- selenium : 브라우저를 띄어주고 화면에서 스크롤, 키이벤트 등등 동작을 실행 할 수 있도록 도와주는 프레임 워크이다.
