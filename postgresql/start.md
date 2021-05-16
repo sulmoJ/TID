@@ -49,6 +49,8 @@ sulmo유저로 django_test DB에 접속
 
 CREATEDB권한 django_tester에게 부여
 
+`ALTER ROLE django_tester SUPERUSER;`
+
 ## 장고랑 연동할때
 
 연결할 디비에 유저하나 생성 후 아래와같이 권한 부여
@@ -58,4 +60,3 @@ alter role root set client_encoding to 'utf-8';
 alter role root set timezone to 'Asia/Seoul';
 
 grant all privileges on database django_test to root;
-
